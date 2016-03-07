@@ -11,12 +11,6 @@ foreach ($autoloadFiles as $autoloadFile) {
 }
 
 $application = new \Symfony\Component\Console\Application('SERIALIZER', '1.0');
-$application->add(
-    new \RemiSan\Serializer\Console\HydratorGenerationCommand(
-        new \RemiSan\Serializer\Hydrator\HydratorFactory('cache/serializer'),
-        [],
-        'generate:proxies'
-    )
-);
+$application->add(new \RemiSan\Serializer\Console\HydratorGenerationCommand('generate:proxies'));
 
 $application->run();

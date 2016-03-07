@@ -1,0 +1,3 @@
+path: 'proxies'
+classes:
+    - 'RemiSan\Serializer\Sample\MySampleClass'

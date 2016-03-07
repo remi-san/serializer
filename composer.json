@@ -34,5 +34,10 @@
             "RemiSan\\Serializer\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "RemiSan\\Serializer\\Sample\\": "sample/src/"
+        }
+    },
     "bin": ["bin/serializer"]
 }

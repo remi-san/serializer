@@ -41,7 +41,7 @@ class HydratorFactory
      * @param bool   $generateProxies
      * @return string
      */
-    public function getHydratorClassName($fqcn, $generateProxies)
+    public function getHydratorClassName($fqcn, $generateProxies = false)
     {
         $config = new Configuration($fqcn);
         $config->setAutoGenerateProxies($generateProxies);
