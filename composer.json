@@ -1,0 +1,38 @@
+{
+    "name": "remi-san/serializer",
+    "description" : "A universal, configless PHP serializer for all purpose.",
+    "keywords": [
+        "PHP",
+        "Serializer"
+    ],
+    "authors": [
+        {
+            "name": "Rémi San",
+            "email": "remi.san@gmail.com",
+            "homepage": "http://remi-san.github.io/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">5.3",
+        "ocramius/generated-hydrator": "^1.2|^2.0"
+    },
+    "require-dev": {
+        "symfony/console": "^2.7|^3.0",
+        "symfony/config" : "^2.7|^3.0",
+        "symfony/yaml" : "^2.7|^3.0",
+        "phpunit/phpunit": "^4.5",
+        "Mockery/Mockery": "^0.9"
+    },
+    "suggest": {
+        "symfony/console": "To use the console module to generate proxies",
+        "symfony/config" : "To use the console module to generate proxies",
+        "symfony/yaml" : "To use yaml as config in order to use the console module to generate proxies"
+    },
+    "autoload": {
+        "psr-4": {
+            "RemiSan\\Serializer\\": "src/"
+        }
+    },
+    "bin": ["bin/serializer"]
+}

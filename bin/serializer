@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+$autoloadFiles = array(__DIR__ . '/../vendor/autoload.php',
+                       __DIR__ . '/../../../autoload.php');
+
+foreach ($autoloadFiles as $autoloadFile) {
+    if (file_exists($autoloadFile)) {
+        require_once $autoloadFile;
+        break;
+    }
+}
+
+$application = new \Symfony\Component\Console\Application('SERIALIZER', '1.0');
+$application->add(
+    new \RemiSan\Serializer\Console\HydratorGenerationCommand(
+        new \RemiSan\Serializer\Hydrator\HydratorFactory('cache/serializer'),
+        [],
+        'generate:proxies'
+    )
+);
+
+$application->run();
