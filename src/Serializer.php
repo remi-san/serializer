@@ -77,11 +77,21 @@ class Serializer
     }
 
     /**
+     * @param array $serializedObject
+     *
+     * @return mixed
+     */
+    public function deserialize(array $serializedObject)
+    {
+        return $this->recursiveDeserialize($serializedObject);
+    }
+
+    /**
      * @param mixed $serializedObject
      *
-     * @return object|array
+     * @return mixed
      */
-    public function deserialize($serializedObject)
+    private function recursiveDeserialize($serializedObject)
     {
         if (!is_array($serializedObject)) {
             return $serializedObject;
@@ -93,7 +103,7 @@ class Serializer
                 if (!is_array($value)) {
                     throw new \InvalidArgumentException();
                 }
-                $deserializedArray[$key] = $this->deserialize($value);
+                $deserializedArray[$key] = $this->recursiveDeserialize($value);
             }
 
             return $deserializedArray;
@@ -113,7 +123,7 @@ class Serializer
 
         $curatedPayload = [];
         foreach ($payload as $key => $value) {
-            $curatedPayload[$key] = $this->deserialize($value);
+            $curatedPayload[$key] = $this->recursiveDeserialize($value);
         }
 
         $objectFqcn = $this->classMapper->getClassName($name);
