@@ -27,6 +27,10 @@ class ArrayFormatter implements DataFormatter
      */
     public function getNameAndPayload(array $serializedObject)
     {
+        if (! $this->isSerializedObject($serializedObject)) {
+            throw new \InvalidArgumentException();
+        }
+
         return [
             $serializedObject['name'],
             $serializedObject['payload'],
