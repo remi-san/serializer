@@ -16,7 +16,7 @@ class ArrayFormatter implements DataFormatter
     {
         return [
             'name' => $name,
-            'payload' => $payload
+            'payload' => $payload,
         ];
     }
 
@@ -29,7 +29,7 @@ class ArrayFormatter implements DataFormatter
     {
         return [
             $serializedObject['name'],
-            $serializedObject['payload']
+            $serializedObject['payload'],
         ];
     }
 

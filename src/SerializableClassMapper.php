@@ -1,74 +1,30 @@
 <?php
+
 namespace RemiSan\Serializer;
 
-class SerializableClassMapper
+interface SerializableClassMapper
 {
-    /**
-     * @var SerializableClassNameExtractor
-     */
-    private $nameExtractor;
-
-    /**
-     * @var string[]
-     */
-    private $mapping;
-
-    /**
-     * Constructor.
-     *
-     * @param SerializableClassNameExtractor $nameExtractor
-     */
-    public function __construct(SerializableClassNameExtractor $nameExtractor)
-    {
-        $this->nameExtractor = $nameExtractor;
-        $this->mapping = array();
-    }
-
     /**
      * @param string[] $classes
      */
-    public function registerMultiple(array $classes)
-    {
-        foreach ($classes as $class) {
-            $this->register($class);
-        }
-    }
+    public function registerMultiple(array $classes);
 
     /**
      * @param string $class
      */
-    public function register($class)
-    {
-        $this->mapping[$this->extractName($class)] = $class;
-    }
+    public function register($class);
 
     /**
-     * @param  string $class
+     * @param string $class
+     *
      * @return string
      */
-    public function extractName($class)
-    {
-        return $this->nameExtractor->extractName($class);
-    }
+    public function extractName($class);
 
     /**
-     * @param  string $name
+     * @param string $name
+     *
      * @return string
      */
-    public function getClassName($name)
-    {
-        if (! isset($this->mapping[$name])) {
-            throw new \InvalidArgumentException();
-        }
-
-        return $this->mapping[$name];
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getMappedClasses()
-    {
-        return $this->mapping;
-    }
+    public function getClassName($name);
 }

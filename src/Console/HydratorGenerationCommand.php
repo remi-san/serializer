@@ -1,16 +1,17 @@
 <?php
+
 namespace RemiSan\Serializer\Console;
 
+use RemiSan\Serializer\Hydrator\HydratorFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use RemiSan\Serializer\Hydrator\HydratorFactory;
 
 class HydratorGenerationCommand extends Command
 {
     /**
-     * Configures the command
+     * Configures the command.
      */
     protected function configure()
     {
@@ -20,15 +21,13 @@ class HydratorGenerationCommand extends Command
     }
 
     /**
-     * Code executed when command invoked
+     * Code executed when command invoked.
      *
-     * @param  InputInterface  $input
-     * @param  OutputInterface $output
-     * @return void
+     * @param InputInterface  $input
+     * @param OutputInterface $output
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $proxyPath = $input->getArgument('cache-path');
         $className = $input->getArgument('class');
 

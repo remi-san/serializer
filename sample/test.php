@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$classMapper = new \RemiSan\Serializer\SerializableClassMapper(
+$classMapper = new \RemiSan\Serializer\Mapper\DefaultMapper(
     new RemiSan\Serializer\NameExtractor\DefaultNameExtractor()
 );
 $classMapper->register(\RemiSan\Serializer\Sample\MySampleClass::class);

@@ -15,6 +15,7 @@ class FlatFormatter implements DataFormatter
     public function format($name, array $payload)
     {
         $payload['_metadata'] = array('name' => $name);
+
         return $payload;
     }
 
@@ -31,7 +32,7 @@ class FlatFormatter implements DataFormatter
 
         return [
             $name,
-            $payload
+            $payload,
         ];
     }
 

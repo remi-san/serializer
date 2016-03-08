@@ -1,7 +1,7 @@
 <?php
+
 namespace RemiSan\Serializer;
 
-use PhpParser\Node\Name;
 use RemiSan\Serializer\Hydrator\HydratorFactory;
 
 class Serializer
@@ -38,9 +38,9 @@ class Serializer
         $this->generateProxies = $generateProxies;
     }
 
-
     /**
-     * @param  mixed $object
+     * @param mixed $object
+     *
      * @return array
      */
     public function serialize($object)
@@ -50,6 +50,7 @@ class Serializer
             foreach ($object as $key => $value) {
                 $serializedArray[$key] = $this->serialize($value);
             }
+
             return $serializedArray;
         } elseif (is_object($object)) {
             return $this->serializeObject($object);
@@ -59,7 +60,8 @@ class Serializer
     }
 
     /**
-     * @param  object $object
+     * @param object $object
+     *
      * @return array
      */
     private function serializeObject($object)
@@ -75,7 +77,8 @@ class Serializer
     }
 
     /**
-     * @param  mixed $serializedObject
+     * @param mixed $serializedObject
+     *
      * @return object|array
      */
     public function deserialize($serializedObject)
@@ -92,12 +95,14 @@ class Serializer
                 }
                 $deserializedArray[$key] = $this->deserialize($value);
             }
+
             return $deserializedArray;
         }
     }
 
     /**
-     * @param  array $serializedObject
+     * @param array $serializedObject
+     *
      * @return object
      */
     private function deserializeObject(array $serializedObject)

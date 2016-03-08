@@ -1,4 +1,5 @@
 <?php
+
 namespace RemiSan\Serializer\NameExtractor;
 
 use RemiSan\Serializer\SerializableClassNameExtractor;
@@ -19,7 +20,8 @@ class CompositeNameExtractor implements SerializableClassNameExtractor
     }
 
     /**
-     * @param  string $class
+     * @param string $class
+     *
      * @return string
      */
     public function extractName($class)
@@ -34,7 +36,8 @@ class CompositeNameExtractor implements SerializableClassNameExtractor
     }
 
     /**
-     * @param  string $class
+     * @param string $class
+     *
      * @return bool
      */
     public function canExtractName($class)

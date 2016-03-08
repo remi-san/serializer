@@ -1,4 +1,5 @@
 <?php
+
 namespace RemiSan\Serializer\Hydrator;
 
 use GeneratedHydrator\Configuration;
@@ -12,7 +13,7 @@ class HydratorFactory
     private $cacheDir;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param string $cacheDir
      */
@@ -24,13 +25,15 @@ class HydratorFactory
     /**
      * Gets an hydrator instance for the given class.
      *
-     * @param  string $fqcn
-     * @param  bool   $generateProxies
+     * @param string $fqcn
+     * @param bool   $generateProxies
+     *
      * @return HydratorInterface
      */
     public function getHydrator($fqcn, $generateProxies = false)
     {
         $hydratorClass = $this->getHydratorClassName($fqcn, $generateProxies);
+
         return new $hydratorClass();
     }
 
@@ -39,6 +42,7 @@ class HydratorFactory
      *
      * @param string $fqcn
      * @param bool   $generateProxies
+     *
      * @return string
      */
     public function getHydratorClassName($fqcn, $generateProxies = false)
