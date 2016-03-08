@@ -6,33 +6,36 @@ use RemiSan\Serializer\Hydrator\HydratorFactory;
 
 class Serializer
 {
-    /**
-     * @var SerializableClassMapper
-     */
+    /** @var SerializableClassMapper */
     private $classMapper;
 
-    /**
-     * @var HydratorFactory
-     */
+    /** @var HydratorFactory */
     private $hydratorFactory;
 
-    /**
-     * @var DataFormatter
-     */
+    /** @var DataFormatter */
     private $dataFormatter;
+
+    /** @var bool */
+    private $generateProxies;
 
     /**
      * Constructor.
      *
      * @param SerializableClassMapper $classMapper
      * @param HydratorFactory         $hydratorFactory
+     * @param DataFormatter           $dataFormatter
+     * @param bool                    $generateProxies
      */
     public function __construct(
         SerializableClassMapper $classMapper,
-        HydratorFactory $hydratorFactory
+        HydratorFactory $hydratorFactory,
+        DataFormatter $dataFormatter,
+        $generateProxies = false
     ) {
         $this->classMapper = $classMapper;
         $this->hydratorFactory = $hydratorFactory;
+        $this->dataFormatter = $dataFormatter;
+        $this->generateProxies = $generateProxies;
     }
 
 
@@ -61,7 +64,7 @@ class Serializer
      */
     private function serializeObject($object)
     {
-        $payload = $this->hydratorFactory->getHydrator(get_class($object))->extract($object);
+        $payload = $this->hydratorFactory->getHydrator(get_class($object), $this->generateProxies)->extract($object);
 
         $curatedPayload = [];
         foreach ($payload as $key => $value) {
@@ -111,7 +114,9 @@ class Serializer
         $objectFqcn = $this->classMapper->getClassName($name);
         $object = new $objectFqcn();
 
-        return $this->hydratorFactory->getHydrator($objectFqcn)->hydrate($curatedPayload, $object);
+        return $this->hydratorFactory
+            ->getHydrator($objectFqcn, $this->generateProxies)
+            ->hydrate($curatedPayload, $object);
     }
 
     /**
