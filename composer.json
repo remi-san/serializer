@@ -19,15 +19,11 @@
     },
     "require-dev": {
         "symfony/console": "^2.7|^3.0",
-        "symfony/config" : "^2.7|^3.0",
-        "symfony/yaml" : "^2.7|^3.0",
         "phpunit/phpunit": "^4.5",
         "Mockery/Mockery": "^0.9"
     },
     "suggest": {
-        "symfony/console": "To use the console module to generate proxies",
-        "symfony/config" : "To use the console module to generate proxies",
-        "symfony/yaml" : "To use yaml as config in order to use the console module to generate proxies"
+        "symfony/console": "To use the console module to generate proxies"
     },
     "autoload": {
         "psr-4": {
