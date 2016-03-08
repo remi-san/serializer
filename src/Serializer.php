@@ -1,10 +1,10 @@
 <?php
-namespace RemiSan\Serializer\Hydrator;
+namespace RemiSan\Serializer;
 
 use PhpParser\Node\Name;
-use RemiSan\Serializer\SerializableClassMapper;
+use RemiSan\Serializer\Hydrator\HydratorFactory;
 
-class HydratorSerializer
+class Serializer
 {
     /**
      * @var SerializableClassMapper
@@ -15,6 +15,11 @@ class HydratorSerializer
      * @var HydratorFactory
      */
     private $hydratorFactory;
+
+    /**
+     * @var DataFormatter
+     */
+    private $dataFormatter;
 
     /**
      * Constructor.
@@ -63,10 +68,7 @@ class HydratorSerializer
             $curatedPayload[$key] = $this->serialize($value);
         }
 
-        return [
-            'name' => $this->classMapper->extractName(get_class($object)),
-            'payload' => $curatedPayload
-        ];
+        return $this->dataFormatter->format($this->classMapper->extractName(get_class($object)), $curatedPayload);
     }
 
     /**
@@ -77,7 +79,7 @@ class HydratorSerializer
     {
         if (!is_array($serializedObject)) {
             return $serializedObject;
-        } elseif ($this->isSerializedObject($serializedObject)) {
+        } elseif ($this->dataFormatter->isSerializedObject($serializedObject)) {
             return $this->deserializeObject($serializedObject);
         } else {
             $deserializedArray = [];
@@ -99,25 +101,17 @@ class HydratorSerializer
     {
         $this->checkSerializedObject($serializedObject);
 
-        $payload = $serializedObject['payload'];
+        list($name, $payload) = $this->dataFormatter->getNameAndPayload($serializedObject);
+
         $curatedPayload = [];
         foreach ($payload as $key => $value) {
             $curatedPayload[$key] = $this->deserialize($value);
         }
 
-        $objectFqcn = $this->classMapper->getClassName($serializedObject['name']);
+        $objectFqcn = $this->classMapper->getClassName($name);
         $object = new $objectFqcn();
 
         return $this->hydratorFactory->getHydrator($objectFqcn)->hydrate($curatedPayload, $object);
-    }
-
-    /**
-     * @param  array $serializedObject
-     * @return bool
-     */
-    private function isSerializedObject(array $serializedObject)
-    {
-        return isset($serializedObject['name']) && isset($serializedObject['payload']);
     }
 
     /**
@@ -125,7 +119,7 @@ class HydratorSerializer
      */
     private function checkSerializedObject(array $serializedObject)
     {
-        if (!$this->isSerializedObject($serializedObject)) {
+        if (!$this->dataFormatter->isSerializedObject($serializedObject)) {
             throw new \InvalidArgumentException();
         }
     }
