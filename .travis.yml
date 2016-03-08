@@ -15,5 +15,12 @@ matrix:
 install:
   - travis_retry composer install --no-interaction --prefer-source
 
+before_script:
+  - travis_retry wget https://scrutinizer-ci.com/ocular.phar
+
 script:
-  - vendor/bin/phpunit --config=phpunit-coverage.xml --coverage-text
+  - vendor/bin/phpunit --config=phpunit-coverage.xml --coverage-clover=coverage.xml
+  - vendor/bin/phpcs --standard=PSR2 src
+
+after_script:
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.xml
