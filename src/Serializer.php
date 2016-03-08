@@ -100,9 +100,6 @@ class Serializer
         } else {
             $deserializedArray = [];
             foreach ($serializedObject as $key => $value) {
-                if (!is_array($value)) {
-                    throw new \InvalidArgumentException();
-                }
                 $deserializedArray[$key] = $this->recursiveDeserialize($value);
             }
 
@@ -117,8 +114,6 @@ class Serializer
      */
     private function deserializeObject(array $serializedObject)
     {
-        $this->checkSerializedObject($serializedObject);
-
         list($name, $payload) = $this->dataFormatter->getNameAndPayload($serializedObject);
 
         $curatedPayload = [];
@@ -132,15 +127,5 @@ class Serializer
         return $this->hydratorFactory
             ->getHydrator($objectFqcn, $this->generateProxies)
             ->hydrate($curatedPayload, $object);
-    }
-
-    /**
-     * @param array $serializedObject
-     */
-    private function checkSerializedObject(array $serializedObject)
-    {
-        if (!$this->dataFormatter->isSerializedObject($serializedObject)) {
-            throw new \InvalidArgumentException();
-        }
     }
 }

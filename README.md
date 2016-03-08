@@ -6,6 +6,7 @@ Usage
 -----
 
 ```php
+
     $classMapper = new \RemiSan\Serializer\Mapper\DefaultMapper(
         new RemiSan\Serializer\NameExtractor\DefaultNameExtractor()
     );
@@ -14,11 +15,12 @@ Usage
     $serializer = new \RemiSan\Serializer\Serializer(
         $classMapper,
         new \RemiSan\Serializer\Hydrator\HydratorFactory(__DIR__ . '/proxies'),
-        new \RemiSan\Serializer\Formatter\ArrayFormatter(),
+        new \RemiSan\Serializer\Formatter\FlatFormatter(),
         true
     );
     
     $object = new \MySampleClass(new MySampleClass());
     $serialized = $serializer->serialize($object);
     $deserialized = $serializer->deserialize($serialized);
+    
 ```

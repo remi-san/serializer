@@ -3,9 +3,13 @@
 namespace RemiSan\Serializer\Test;
 
 use RemiSan\Serializer\DataFormatter;
+use RemiSan\Serializer\Formatter\FlatFormatter;
 use RemiSan\Serializer\Hydrator\HydratorFactory;
+use RemiSan\Serializer\Mapper\DefaultMapper;
+use RemiSan\Serializer\NameExtractor\DefaultNameExtractor;
 use RemiSan\Serializer\SerializableClassMapper;
 use RemiSan\Serializer\Serializer;
+use RemiSan\Serializer\Test\Mock\Serializable;
 
 class SerializerTest extends \PHPUnit_Framework_TestCase
 {
@@ -20,9 +24,10 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->classMapper = \Mockery::mock(SerializableClassMapper::class);
-        $this->hydratorFactory = \Mockery::mock(HydratorFactory::class);
-        $this->dataFormatter = \Mockery::mock(DataFormatter::class);
+        $this->classMapper = new DefaultMapper(new DefaultNameExtractor());
+        $this->classMapper->register(Serializable::class);
+        $this->hydratorFactory = new HydratorFactory(__DIR__ . DIRECTORY_SEPARATOR . 'cache');
+        $this->dataFormatter = new FlatFormatter();
     }
 
     public function tearDown()
@@ -42,7 +47,28 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
             true
         );
 
-        $this->assertTrue(true);
+        $object = new Serializable(new Serializable(['a', 'b']));
+
+        $serialized = $serializer->serialize($object);
+
+        $this->assertEquals(
+            [
+                'foo' => 'foo',
+                'bar' => 'bar',
+                'baz' => [
+                    'foo' => 'foo',
+                    'bar' => 'bar',
+                    'baz' => ['a', 'b'],
+                    '_metadata' => [
+                        'name' => 'RemiSan\Serializer\Test\Mock\Serializable'
+                    ]
+                ],
+                '_metadata' => [
+                    'name' => 'RemiSan\Serializer\Test\Mock\Serializable'
+                ]
+            ],
+            $serialized
+        );
     }
 
     /**
@@ -55,6 +81,29 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
             $this->hydratorFactory,
             $this->dataFormatter,
             true
+        );
+
+        $serialized = [
+            'foo' => 'foo',
+            'bar' => 'bar',
+            'baz' => [
+                'foo' => 'foo',
+                'bar' => 'bar',
+                'baz' => ['a', 'b'],
+                '_metadata' => [
+                    'name' => 'RemiSan\Serializer\Test\Mock\Serializable'
+                ]
+            ],
+            '_metadata' => [
+                'name' => 'RemiSan\Serializer\Test\Mock\Serializable'
+            ]
+        ];
+
+        $deserialized = $serializer->deserialize($serialized);
+
+        $this->assertEquals(
+            new Serializable(new Serializable(['a', 'b'])),
+            $deserialized
         );
 
         $this->assertTrue(true);
