@@ -1,7 +1,8 @@
 <?php
-namespace TwitterHangman\Test;
 
-class DummyTest extends \PHPUnit_Framework_TestCase
+namespace RemiSan\Serializer\Test;
+
+class FlatFormatterTest extends \PHPUnit_Framework_TestCase
 {
     public function tearDown()
     {
