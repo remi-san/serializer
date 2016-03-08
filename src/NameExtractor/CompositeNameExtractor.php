@@ -12,6 +12,14 @@ class CompositeNameExtractor implements SerializableClassNameExtractor
     private $extractors;
 
     /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->extractors = [];
+    }
+
+    /**
      * @param SerializableClassNameExtractor $extractor
      */
     public function addExtractor(SerializableClassNameExtractor $extractor)
