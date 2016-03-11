@@ -122,7 +122,8 @@ class Serializer
         }
 
         $objectFqcn = $this->classMapper->getClassName($name);
-        $object = new $objectFqcn();
+        $objectReflection = new \ReflectionClass($objectFqcn);
+        $object = $objectReflection->newInstanceWithoutConstructor();
 
         return $this->hydratorFactory
             ->getHydrator($objectFqcn, $this->generateProxies)
