@@ -18,9 +18,9 @@ class HydratorFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldReturnAnHydratorClassName()
     {
-        $hydratorFactory = new HydratorFactory(__DIR__ . DIRECTORY_SEPARATOR . 'cache');
+        $hydratorFactory = new HydratorFactory(__DIR__ . DIRECTORY_SEPARATOR . 'cache', true);
 
-        $hydratorClassName = $hydratorFactory->getHydratorClassName(Serializable::class, true);
+        $hydratorClassName = $hydratorFactory->getHydratorClassName(Serializable::class);
 
         $this->assertNotNull($hydratorClassName);
         $this->assertTrue(is_subclass_of($hydratorClassName, HydratorInterface::class));
@@ -31,9 +31,9 @@ class HydratorFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function itShouldReturnAnHydratorInstance()
     {
-        $hydratorFactory = new HydratorFactory(__DIR__ . DIRECTORY_SEPARATOR . 'cache');
+        $hydratorFactory = new HydratorFactory(__DIR__ . DIRECTORY_SEPARATOR . 'cache', true);
 
-        $hydrator = $hydratorFactory->getHydrator(Serializable::class, true);
+        $hydrator = $hydratorFactory->getHydrator(Serializable::class);
 
         $this->assertInstanceOf(HydratorInterface::class, $hydrator);
     }

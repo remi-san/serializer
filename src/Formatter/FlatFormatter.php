@@ -26,7 +26,7 @@ class FlatFormatter implements DataFormatter
      */
     public function getNameAndPayload(array $serializedObject)
     {
-        if (! $this->isSerializedObject($serializedObject)) {
+        if (!$this->isSerializedObject($serializedObject)) {
             throw new \InvalidArgumentException();
         }
 

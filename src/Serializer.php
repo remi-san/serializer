@@ -19,9 +19,6 @@ class Serializer
     /** @var InstantiatorInterface */
     private $instantiator;
 
-    /** @var bool */
-    private $generateProxies;
-
     /**
      * Constructor.
      *
@@ -29,20 +26,17 @@ class Serializer
      * @param HydratorFactory         $hydratorFactory
      * @param DataFormatter           $dataFormatter
      * @param InstantiatorInterface   $instantiator
-     * @param bool                    $generateProxies
      */
     public function __construct(
         SerializableClassMapper $classMapper,
         HydratorFactory $hydratorFactory,
         DataFormatter $dataFormatter,
-        InstantiatorInterface $instantiator,
-        $generateProxies = false
+        InstantiatorInterface $instantiator
     ) {
         $this->classMapper = $classMapper;
         $this->hydratorFactory = $hydratorFactory;
         $this->dataFormatter = $dataFormatter;
         $this->instantiator = $instantiator;
-        $this->generateProxies = $generateProxies;
     }
 
     /**
@@ -73,7 +67,7 @@ class Serializer
      */
     private function serializeObject($object)
     {
-        $payload = $this->hydratorFactory->getHydrator(get_class($object), $this->generateProxies)->extract($object);
+        $payload = $this->hydratorFactory->getHydrator(get_class($object))->extract($object);
 
         $curatedPayload = [];
         foreach ($payload as $key => $value) {
@@ -132,7 +126,7 @@ class Serializer
         $object = $this->instantiator->instantiate($objectFqcn);
 
         return $this->hydratorFactory
-            ->getHydrator($objectFqcn, $this->generateProxies)
+            ->getHydrator($objectFqcn)
             ->hydrate($curatedPayload, $object);
     }
 }

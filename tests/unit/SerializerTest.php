@@ -31,7 +31,7 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
     {
         $this->classMapper = new DefaultMapper(new DefaultNameExtractor());
         $this->classMapper->register(Serializable::class);
-        $this->hydratorFactory = new HydratorFactory(__DIR__ . DIRECTORY_SEPARATOR . 'cache');
+        $this->hydratorFactory = new HydratorFactory(__DIR__ . DIRECTORY_SEPARATOR . 'cache', true);
         $this->dataFormatter = new FlatFormatter();
         $this->instantiator = new Instantiator();
     }
@@ -50,8 +50,7 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
             $this->classMapper,
             $this->hydratorFactory,
             $this->dataFormatter,
-            $this->instantiator,
-            true
+            $this->instantiator
         );
 
         $object = new Serializable(new Serializable(['a', 'b']));
@@ -87,8 +86,7 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
             $this->classMapper,
             $this->hydratorFactory,
             $this->dataFormatter,
-            $this->instantiator,
-            true
+            $this->instantiator
         );
 
         $serialized = [

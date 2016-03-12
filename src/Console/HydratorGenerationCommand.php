@@ -28,8 +28,6 @@ class HydratorGenerationCommand extends Command
      *
      * @param InputInterface  $input
      * @param OutputInterface $output
-     *
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -39,7 +37,7 @@ class HydratorGenerationCommand extends Command
         $hydratorFactory = new HydratorFactory($proxyPath);
 
         $output->write('Generating "<info>' . $className . '</info>" ');
-        $hydratorFactory->getHydratorClassName($className, true);
+        $hydratorFactory->getHydratorClassName($className);
         $output->writeLn('<comment>Done</comment>');
     }
 }

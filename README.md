@@ -21,10 +21,9 @@ Usage
     
     $serializer = new RemiSan\Serializer\Serializer(
         $classMapper,
-        new RemiSan\Serializer\Hydrator\HydratorFactory(__DIR__ . '/proxies'),
+        new RemiSan\Serializer\Hydrator\HydratorFactory(__DIR__ . '/proxies', true),
         new RemiSan\Serializer\Formatter\FlatFormatter(),
-        new Doctrine\Instantiator\Instantiator(),
-        true
+        new Doctrine\Instantiator\Instantiator()
     );
     
     $object = new MySampleClass(new MySampleClass());

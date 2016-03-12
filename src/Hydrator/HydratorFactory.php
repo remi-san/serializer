@@ -13,26 +13,32 @@ class HydratorFactory
     private $cacheDir;
 
     /**
+     * @var bool
+     */
+    private $generateProxies;
+
+    /**
      * Constructor.
      *
      * @param string $cacheDir
+     * @param bool   $generateProxies
      */
-    public function __construct($cacheDir)
+    public function __construct($cacheDir, $generateProxies = false)
     {
         $this->cacheDir = $cacheDir;
+        $this->generateProxies = $generateProxies;
     }
 
     /**
      * Gets an hydrator instance for the given class.
      *
      * @param string $fqcn
-     * @param bool   $generateProxies
      *
      * @return HydratorInterface
      */
-    public function getHydrator($fqcn, $generateProxies = false)
+    public function getHydrator($fqcn)
     {
-        $hydratorClass = $this->getHydratorClassName($fqcn, $generateProxies);
+        $hydratorClass = $this->getHydratorClassName($fqcn);
 
         return new $hydratorClass();
     }
@@ -41,14 +47,13 @@ class HydratorFactory
      * Gets the hydrator class name.
      *
      * @param string $fqcn
-     * @param bool   $generateProxies
      *
      * @return string
      */
-    public function getHydratorClassName($fqcn, $generateProxies = false)
+    public function getHydratorClassName($fqcn)
     {
         $config = new Configuration($fqcn);
-        $config->setAutoGenerateProxies($generateProxies);
+        $config->setAutoGenerateProxies($this->generateProxies);
         $config->setGeneratedClassesTargetDir($this->cacheDir);
 
         return $config->createFactory()->getHydratorClass();
