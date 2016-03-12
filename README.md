@@ -14,19 +14,20 @@ Usage
 
 ```php
 
-    $classMapper = new \RemiSan\Serializer\Mapper\DefaultMapper(
+    $classMapper = new RemiSan\Serializer\Mapper\DefaultMapper(
         new RemiSan\Serializer\NameExtractor\DefaultNameExtractor()
     );
-    $classMapper->register(\RemiSan\Serializer\Sample\MySampleClass::class);
+    $classMapper->register(RemiSan\Serializer\Sample\MySampleClass::class);
     
-    $serializer = new \RemiSan\Serializer\Serializer(
+    $serializer = new RemiSan\Serializer\Serializer(
         $classMapper,
-        new \RemiSan\Serializer\Hydrator\HydratorFactory(__DIR__ . '/proxies'),
-        new \RemiSan\Serializer\Formatter\FlatFormatter(),
+        new RemiSan\Serializer\Hydrator\HydratorFactory(__DIR__ . '/proxies'),
+        new RemiSan\Serializer\Formatter\FlatFormatter(),
+        new Doctrine\Instantiator\Instantiator(),
         true
     );
     
-    $object = new \MySampleClass(new MySampleClass());
+    $object = new MySampleClass(new MySampleClass());
     $serialized = $serializer->serialize($object);
     $deserialized = $serializer->deserialize($serialized);
     

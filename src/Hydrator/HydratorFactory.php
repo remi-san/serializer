@@ -3,7 +3,7 @@
 namespace RemiSan\Serializer\Hydrator;
 
 use GeneratedHydrator\Configuration;
-use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Hydrator\HydratorInterface;
 
 class HydratorFactory
 {

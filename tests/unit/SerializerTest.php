@@ -2,6 +2,8 @@
 
 namespace RemiSan\Serializer\Test;
 
+use Doctrine\Instantiator\Instantiator;
+use Doctrine\Instantiator\InstantiatorInterface;
 use RemiSan\Serializer\DataFormatter;
 use RemiSan\Serializer\Formatter\FlatFormatter;
 use RemiSan\Serializer\Hydrator\HydratorFactory;
@@ -22,12 +24,16 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
     /** @var DataFormatter */
     private $dataFormatter;
 
+    /** @var InstantiatorInterface */
+    private $instantiator;
+
     public function setUp()
     {
         $this->classMapper = new DefaultMapper(new DefaultNameExtractor());
         $this->classMapper->register(Serializable::class);
         $this->hydratorFactory = new HydratorFactory(__DIR__ . DIRECTORY_SEPARATOR . 'cache');
         $this->dataFormatter = new FlatFormatter();
+        $this->instantiator = new Instantiator();
     }
 
     public function tearDown()
@@ -44,6 +50,7 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
             $this->classMapper,
             $this->hydratorFactory,
             $this->dataFormatter,
+            $this->instantiator,
             true
         );
 
@@ -80,6 +87,7 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
             $this->classMapper,
             $this->hydratorFactory,
             $this->dataFormatter,
+            $this->instantiator,
             true
         );
 

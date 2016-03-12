@@ -2,6 +2,7 @@
 
 namespace RemiSan\Serializer;
 
+use Doctrine\Instantiator\InstantiatorInterface;
 use RemiSan\Serializer\Hydrator\HydratorFactory;
 
 class Serializer
@@ -15,6 +16,9 @@ class Serializer
     /** @var DataFormatter */
     private $dataFormatter;
 
+    /** @var InstantiatorInterface */
+    private $instantiator;
+
     /** @var bool */
     private $generateProxies;
 
@@ -24,17 +28,20 @@ class Serializer
      * @param SerializableClassMapper $classMapper
      * @param HydratorFactory         $hydratorFactory
      * @param DataFormatter           $dataFormatter
+     * @param InstantiatorInterface   $instantiator
      * @param bool                    $generateProxies
      */
     public function __construct(
         SerializableClassMapper $classMapper,
         HydratorFactory $hydratorFactory,
         DataFormatter $dataFormatter,
+        InstantiatorInterface $instantiator,
         $generateProxies = false
     ) {
         $this->classMapper = $classMapper;
         $this->hydratorFactory = $hydratorFactory;
         $this->dataFormatter = $dataFormatter;
+        $this->instantiator = $instantiator;
         $this->generateProxies = $generateProxies;
     }
 
@@ -122,8 +129,7 @@ class Serializer
         }
 
         $objectFqcn = $this->classMapper->getClassName($name);
-        $objectReflection = new \ReflectionClass($objectFqcn);
-        $object = $objectReflection->newInstanceWithoutConstructor();
+        $object = $this->instantiator->instantiate($objectFqcn);
 
         return $this->hydratorFactory
             ->getHydrator($objectFqcn, $this->generateProxies)

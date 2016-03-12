@@ -4,7 +4,7 @@ namespace RemiSan\Serializer\Test;
 
 use RemiSan\Serializer\Hydrator\HydratorFactory;
 use RemiSan\Serializer\Test\Mock\Serializable;
-use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Hydrator\HydratorInterface;
 
 class HydratorFactoryTest extends \PHPUnit_Framework_TestCase
 {
