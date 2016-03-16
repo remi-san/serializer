@@ -6,6 +6,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Packagist Version](https://img.shields.io/packagist/v/remi-san/serializer.svg?style=flat-square)](https://packagist.org/packages/remi-san/serializer)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/remi-san/serializer.svg?style=flat-square)](https://scrutinizer-ci.com/g/remi-san/serializer/code-structure)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/ef989adf-067d-4630-9979-f27c559740c3/small.png)](https://insight.sensiolabs.com/projects/ef989adf-067d-4630-9979-f27c559740c3)
 
 Based on [**GeneratedHydrator**](https://github.com/Ocramius/GeneratedHydrator),
 it serializes recursively, adding metadata to the generated array in order to be
