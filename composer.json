@@ -39,5 +39,12 @@
             "RemiSan\\Serializer\\Sample\\": "sample/src/"
         }
     },
-    "bin": ["bin/serializer"]
+    "bin": [
+        "bin/serializer"
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.2.x-dev"
+        }
+    }
 }
