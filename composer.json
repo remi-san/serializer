@@ -24,10 +24,14 @@
         "phpunit/phpunit": "^4.5",
         "Mockery/Mockery": "^0.9",
         "fabpot/php-cs-fixer": "^1.10",
-        "squizlabs/php_codesniffer": "~2.0"
+        "squizlabs/php_codesniffer": "~2.0",
+        "league/event": "^2.1",
+        "league/tactician": "^1.0"
     },
     "suggest": {
-        "symfony/console": "To use the console module to generate proxies"
+        "symfony/console": "To use the console module to generate proxies",
+        "league/event": "Allows to deal with event within your application.",
+        "league/tactician": "Allows to deal with command within your application."
     },
     "autoload": {
         "psr-4": {
