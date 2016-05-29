@@ -46,10 +46,24 @@ class Serializer
      */
     public function serialize($object)
     {
+        if (!(is_array($object) || is_object($object))) {
+            throw new \InvalidArgumentException();
+        }
+
+        return $this->innerSerialize($object);
+    }
+
+    /**
+     * @param mixed $object
+     *
+     * @return array
+     */
+    private function innerSerialize($object)
+    {
         if (is_array($object)) {
             $serializedArray = [];
             foreach ($object as $key => $value) {
-                $serializedArray[$key] = $this->serialize($value);
+                $serializedArray[$key] = $this->innerSerialize($value);
             }
 
             return $serializedArray;
@@ -71,7 +85,7 @@ class Serializer
 
         $curatedPayload = [];
         foreach ($payload as $key => $value) {
-            $curatedPayload[$key] = $this->serialize($value);
+            $curatedPayload[$key] = $this->innerSerialize($value);
         }
 
         return $this->dataFormatter->format($this->classMapper->extractName(get_class($object)), $curatedPayload);

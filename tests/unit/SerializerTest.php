@@ -80,6 +80,23 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function itShouldThrowAnExceptionWhenTryingToSerializeAPrimitive()
+    {
+        $serializer = new Serializer(
+            $this->classMapper,
+            $this->hydratorFactory,
+            $this->dataFormatter,
+            $this->instantiator
+        );
+        
+        $this->setExpectedException(\InvalidArgumentException::class);
+
+        $serializer->serialize('a');
+    }
+
+    /**
+     * @test
+     */
     public function itShouldDeserialize()
     {
         $serializer = new Serializer(
