@@ -26,6 +26,7 @@ class EventNameExtractor implements SerializableClassNameExtractor
      */
     public function canExtractName($class)
     {
-        return is_subclass_of($class, EventInterface::class) && defined($class::NAME);
+        $reflection = new \ReflectionClass($class);
+        return $reflection->implementsInterface(EventInterface::class) && defined($class.'::NAME');
     }
 }

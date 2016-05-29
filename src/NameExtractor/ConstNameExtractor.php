@@ -25,6 +25,6 @@ class ConstNameExtractor implements SerializableClassNameExtractor
      */
     public function canExtractName($class)
     {
-        return defined($class::NAME);
+        return defined($class.'::NAME');
     }
 }
