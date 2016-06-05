@@ -64,7 +64,7 @@ class DefaultMapper implements SerializableClassMapper
     public function getClassName($name)
     {
         if (!isset($this->mapping[$name])) {
-            throw new \InvalidArgumentException();
+            throw new \InvalidArgumentException(sprintf('Could not find "%s"', $name));
         }
 
         return $this->mapping[$name];
