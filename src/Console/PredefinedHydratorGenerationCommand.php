@@ -23,7 +23,7 @@ class PredefinedHydratorGenerationCommand extends Command
     private $classes;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param HydratorFactory $hydratorFactory
      * @param string[]        $classes
@@ -38,7 +38,7 @@ class PredefinedHydratorGenerationCommand extends Command
     }
 
     /**
-     * Configures the command
+     * Configures the command.
      */
     protected function configure()
     {
@@ -46,11 +46,10 @@ class PredefinedHydratorGenerationCommand extends Command
     }
 
     /**
-     * Code executed when command invoked
+     * Code executed when command invoked.
      *
-     * @param  InputInterface  $input
-     * @param  OutputInterface $output
-     * @return void
+     * @param InputInterface  $input
+     * @param OutputInterface $output
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

@@ -8,12 +8,13 @@ use RemiSan\Serializer\SerializableClassNameExtractor;
 class CommandNameExtractor implements SerializableClassNameExtractor
 {
     /**
-     * @param  string $class
+     * @param string $class
+     *
      * @return string
      */
     public function extractName($class)
     {
-        if (! $this->canExtractName($class)) {
+        if (!$this->canExtractName($class)) {
             throw new \InvalidArgumentException();
         }
 
@@ -21,12 +22,14 @@ class CommandNameExtractor implements SerializableClassNameExtractor
     }
 
     /**
-     * @param  string $class
+     * @param string $class
+     *
      * @return bool
      */
     public function canExtractName($class)
     {
         $reflection = new \ReflectionClass($class);
-        return $reflection->implementsInterface(NamedCommand::class) && defined($class.'::NAME');
+
+        return $reflection->implementsInterface(NamedCommand::class) && defined($class . '::NAME');
     }
 }
