@@ -3,6 +3,7 @@
 namespace RemiSan\Serializer;
 
 use Doctrine\Instantiator\InstantiatorInterface;
+use RemiSan\Serializer\CustomSerializer\CustomSerializer;
 use RemiSan\Serializer\Hydrator\HydratorFactory;
 
 class Serializer
@@ -18,6 +19,9 @@ class Serializer
 
     /** @var InstantiatorInterface */
     private $instantiator;
+
+    /** @var CustomSerializer[] */
+    private $customSerializers;
 
     /**
      * Constructor.
@@ -37,6 +41,15 @@ class Serializer
         $this->hydratorFactory = $hydratorFactory;
         $this->dataFormatter = $dataFormatter;
         $this->instantiator = $instantiator;
+        $this->customSerializers = [];
+    }
+
+    /**
+     * @param CustomSerializer $customSerializer
+     */
+    public function addCustomSerializer(CustomSerializer $customSerializer)
+    {
+        $this->customSerializers[] = $customSerializer;
     }
 
     /**
@@ -81,7 +94,7 @@ class Serializer
      */
     private function serializeObject($object)
     {
-        $payload = $this->hydratorFactory->getHydrator(get_class($object))->extract($object);
+        $payload = $this->getPayload($object);
 
         $curatedPayload = [];
         foreach ($payload as $key => $value) {
@@ -89,6 +102,24 @@ class Serializer
         }
 
         return $this->dataFormatter->format($this->classMapper->extractName(get_class($object)), $curatedPayload);
+    }
+
+    /**
+     * @param object $object
+     *
+     * @return array
+     */
+    private function getPayload($object)
+    {
+        $fqcn = get_class($object);
+
+        foreach ($this->customSerializers as $customSerializer) {
+            if ($customSerializer->canHandle($fqcn)) {
+                return $customSerializer->serialize($object);
+            }
+        }
+
+        return $this->hydratorFactory->getHydrator($fqcn)->extract($object);
     }
 
     /**
@@ -137,6 +168,13 @@ class Serializer
         }
 
         $objectFqcn = $this->classMapper->getClassName($name);
+
+        foreach ($this->customSerializers as $customSerializer) {
+            if ($customSerializer->canHandle($objectFqcn)) {
+                return $customSerializer->deserialize($curatedPayload, $objectFqcn);
+            }
+        }
+
         $object = $this->instantiator->instantiate($objectFqcn);
 
         return $this->hydratorFactory
