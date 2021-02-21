@@ -22,7 +22,7 @@
     "require-dev": {
         "symfony/console": "^2.7|^3.0",
         "phpunit/phpunit": "^4.5",
-        "Mockery/Mockery": "^0.9",
+        "mockery/mockery": "^0.9",
         "friendsofphp/php-cs-fixer": "^1.10",
         "squizlabs/php_codesniffer": "~2.0",
         "league/event": "^2.1",
